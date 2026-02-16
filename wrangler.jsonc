@@ -1,0 +1,21 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "cf_ai_financial_advisor",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-09-23",
+	"compatibility_flags": [
+	  "nodejs_compat"
+	],
+	"ai": {
+	  "binding": "AI"
+	},
+	"kv_namespaces": [
+	  {
+		"binding": "CHAT_HISTORY",
+		"id": "34cf3a26570248c6b8de765d311f0f51"
+	  }
+	],
+	"observability": {
+	  "enabled": true
+	}
+  }

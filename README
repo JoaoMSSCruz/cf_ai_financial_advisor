@@ -1,0 +1,82 @@
+# cf_ai_financial_advisor
+
+A serverless AI trading assistant built on Cloudflare Workers. This application leverages Workers AI for inference and Workers KV for persistent session memory, fulfilling the requirements for a full-stack AI application on the Edge.
+
+## Architecture
+
+* Runtime: Cloudflare Workers (TypeScript)
+* Inference: `@cf/meta/llama-3.3-70b-instruct-fp8-fast` (Workers AI)
+* State Management: Cloudflare Workers KV (Stores chat history per session)
+* Frontend: Server-side rendered HTML/JS with Markdown support (served directly by the Worker)
+
+## Project Structure
+
+```text
+├── src/
+│   ├── index.ts      # Main Worker logic (Routing & API)
+│   ├── ui.ts         # Frontend UI (HTML template)
+│   └── types.ts      # Interface definitions
+├── PROMPTS.md        # AI System Prompt and Logic documentation
+├── wrangler.json     # Cloudflare configuration
+└── README.md         # Documentation
+Prerequisites
+Node.js (v20 or later)
+
+npm
+
+## Cloudflare Account
+
+## Installation & Setup
+Clone the repository:
+
+Bash
+git clone <YOUR_REPO_URL>
+cd cf_ai_financial_advisor
+Install dependencies:
+
+Bash
+npm install
+Authenticate with Cloudflare:
+
+Bash
+npx wrangler login
+Configure KV Namespace:
+The application requires a KV namespace to store chat history.
+
+Bash
+npx wrangler kv namespace create "CHAT_HISTORY"
+Copy the id output from the terminal and update the wrangler.json file:
+
+JSON
+"kv_namespaces": [
+  {
+    "binding": "CHAT_HISTORY",
+    "id": "<YOUR_KV_ID_HERE>"
+  }
+]
+
+## Development
+To run the worker locally while using remote AI bindings (accessing Cloudflare GPUs):
+
+Bash
+npx wrangler dev
+The application will be available at http://localhost:8787.
+
+Note: The session ID is generated client-side on page load. Refreshing the page clears the local session context.
+
+## Deployment
+To deploy the application to the Cloudflare global network:
+
+Bash
+npx wrangler deploy
+Usage Example
+Open the deployed URL.
+
+Ask a concept: "Explain High Frequency Trading."
+
+Test Memory: Ask "Write a Python script for it." (The model will recall "it" refers to HFT).
+
+## View Code: The response will render formatted code blocks using Markdown.
+
+## Live Demo
+https://cf_ai_financial_advisor.joaomcruz05.workers.dev
